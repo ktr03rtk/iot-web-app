@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GPS logging PWA</title>
+    <title>IoT Web App</title>
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" type="image/png" href="/images/icons/icon-384x384.png" />
@@ -17,10 +17,10 @@
 
   <body>
     <header>
-      <h1>GPS logging PWA</h1>
+      <h1>IoT Web App</h1>
     </header>
     <main>
-      <p id="status">GPS情報収集停止中</p>
+      <p id="status">GPS・温湿度収集停止中</p>
       <button id="start-btn">start</button>
       <button id="stop-btn" disabled>stop</button>
 
@@ -69,7 +69,7 @@
         });
       }
     </script>
-    <script src="js/geolocationLogger.js"></script>
+    <script src="js/geolocationSensor.js"></script>
     <script src="js/tempHumiditySensor.js"></script>
     <script src="js/dataUploader.js"></script>
     <script src="js/screenWakeLock.js"></script>

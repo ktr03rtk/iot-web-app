@@ -2,8 +2,8 @@
   'use strict';
   class DataUploader {
     constructor() {
-      this.environmentLog = [];
-      this.collectEnvironmentLogInterval = null;
+      this.sensorData = [];
+      this.collectInterval = null;
       this.sendEnvironmentLogInterval = null;
       this.latitude = document.getElementById('latitude');
       this.longitude = document.getElementById('longitude');
@@ -11,30 +11,29 @@
       this.temperature = document.getElementById('temperature');
       this.humidity = document.getElementById('humidity');
       this.status = document.getElementById('response-status');
+      this.apiUrl = location.protocol + '//' + location.host + '/api/gps-log';
     }
 
     start() {
-      this.collectEnvironmentLogInterval = setInterval(() => {
-        this._collectEnvironmentLog();
-        this._displayCurrentEnvironmentLog();
-        // }, 1000);
-      }, 5000);
+      this.collectInterval = setInterval(() => {
+        this._collectSensorData();
+        this._displayCurrentSensorData();
+      }, 10000);
 
       this.sendEnvironmentLogInterval = setInterval(() => {
-        this._sendEnvironmentLog();
-        // }, 5000);
-      }, 6000);
+        this._sendSensorData();
+      }, 60000);
     }
 
     stop() {
-      clearInterval(this.collectEnvironmentLogInterval);
+      clearInterval(this.collectInterval);
       clearInterval(this.sendEnvironmentLogInterval);
     }
 
     // utils
 
-    _collectEnvironmentLog() {
-      this.environmentLog.push([
+    _collectSensorData() {
+      this.sensorData.push([
         new Date().toISOString(),
         window.mainjs.latitude,
         window.mainjs.longitude,
@@ -44,7 +43,7 @@
       ]);
     }
 
-    _displayCurrentEnvironmentLog() {
+    _displayCurrentSensorData() {
       if (window.mainjs.latitude !== null && window.mainjs.longitude !== null) {
         this.latitude.innerText = this._addUnit(window.mainjs.latitude);
         this.longitude.innerText = this._addUnit(window.mainjs.longitude);
@@ -94,14 +93,14 @@
       return position;
     }
 
-    _sendEnvironmentLog() {
+    _sendSensorData() {
       // 送信完了したログだけ確実に削除するため、送信ログ数を管理
-      const arrayLength = this.environmentLog.length;
+      const arrayLength = this.sensorData.length;
       const data = {
-        environmentLog: this.environmentLog.slice(0, arrayLength),
+        sensorData: this.sensorData.slice(0, arrayLength),
       };
 
-      fetch(location.protocol + '//' + location.host + '/api/gps-log', {
+      fetch(this.apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,9 +120,8 @@
             console.error('error response', response);
             throw new Error('response status error');
           } else {
-            // console.log(response);
             this.status.innerText = response.status;
-            this.environmentLog.splice(0, arrayLength);
+            this.sensorData.splice(0, arrayLength);
           }
         })
         .catch((error) => {

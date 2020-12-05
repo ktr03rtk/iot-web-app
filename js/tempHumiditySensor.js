@@ -3,44 +3,16 @@
   class TempHumiditySensor {
     constructor() {
       this.device = null;
-      this.deviceName = 'Tukeru_th';
+      this.deviceNamePrefix = 'Tukeru_th';
       this.primaryServiceUuid = 'b3b36901-50d3-4044-808d-50835b13a6cd';
       this.writeCharacteristicUuid = 'b3b39101-50d3-4044-808d-50835b13a6cd';
       this.indicateCharacteristicUuid = 'b3b39102-50d3-4044-808d-50835b13a6cd';
-      this.writeBuffTemp = new Uint8Array([
-        3,
-        3,
-        2,
-        0,
-        2,
-        2,
-        1,
-        0,
-        0,
-        4,
-        3,
-        1,
-        0,
-        0,
-        1,
-      ]);
-      this.writeBuffHumi = new Uint8Array([
-        3,
-        3,
-        2,
-        0,
-        2,
-        2,
-        1,
-        0,
-        0,
-        5,
-        3,
-        1,
-        0,
-        0,
-        1,
-      ]);
+      this.writeBuffTemperature = new Uint8Array(
+        Array.from('332022100431001').map((x) => Number(x))
+      );
+      this.writeBuffHumidity = new Uint8Array(
+        Array.from('332022100531001').map((x) => Number(x))
+      );
       this._characteristics = new Map();
       this.mapData = new Map();
       this._div_packet_queue = [];
@@ -50,7 +22,7 @@
       return navigator.bluetooth
         .requestDevice({
           acceptAllDevices: false,
-          filters: [{ namePrefix: this.deviceName }],
+          filters: [{ namePrefix: this.deviceNamePrefix }],
           optionalServices: [this.primaryServiceUuid],
         })
         .then((device) => {
@@ -58,6 +30,7 @@
           return device.gatt.connect();
         })
         .then((server) => {
+          console.log('BLE connected');
           return Promise.all([
             this._getServiceAndCacheCharacteristic(
               server,
@@ -73,7 +46,7 @@
         })
         .then(() => {
           setTimeout(() => {
-            this._readCharacteristicValue();
+            this._readAndWriteCharacteristicValue();
           }, 10000);
           return;
         })
@@ -105,7 +78,7 @@
         });
     }
 
-    _readCharacteristicValue() {
+    _readAndWriteCharacteristicValue() {
       let writeCharacteristic = this._characteristics.get(
         this.writeCharacteristicUuid
       );
@@ -122,10 +95,10 @@
 
     _writeValue(uuid, characteristic) {
       setTimeout(() => {
-        characteristic.writeValue(this.writeBuffHumi);
+        characteristic.writeValue(this.writeBuffHumidity);
       }, 1000);
       setTimeout(() => {
-        characteristic.writeValue(this.writeBuffTemp);
+        characteristic.writeValue(this.writeBuffTemperature);
       }, 5000);
 
       return;
@@ -148,7 +121,6 @@
     }
 
     _receivedPacket(buf) {
-      // console.log('recevd');
       let new_buf = new Uint8Array(buf.slice(1));
       this._div_packet_queue.push(new_buf);
       if (this._isExecutedPacket(buf)) {
@@ -188,13 +160,9 @@
               sensor_type = p['sensorTypeCode'];
             } else {
               if (sensor_type === 4) {
-                // console.log('temperature');
-                // console.log(p['temperature']);
                 window.mainjs.temperature = String(p['temperature']);
                 return;
               } else if (sensor_type === 5) {
-                // console.log('humidity');
-                // console.log(p['humidity']);
                 window.mainjs.humidity = String(p['humidity']);
                 return;
               }
@@ -328,5 +296,6 @@
       }
     }
   }
+
   window.tempHumiditySensor = new TempHumiditySensor();
 })();
