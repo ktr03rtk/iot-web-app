@@ -5,14 +5,6 @@
       this.geolocationLog = [];
       this.sendGpsLogInterval = null;
       this.watchId = null;
-      this.currentPosition = {
-        latitude: null,
-        longitude: null,
-        altitude: null,
-      };
-      this.latitude = document.getElementById('latitude');
-      this.longitude = document.getElementById('longitude');
-      this.altitude = document.getElementById('altitude');
     }
 
     start() {
