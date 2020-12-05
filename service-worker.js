@@ -6,7 +6,7 @@ const precacheResources = [
   'manifest.json',
   'main.js',
   'js/dataUploader.js',
-  'js/geolocationLogger.js',
+  'js/geolocationSensor.js',
   'js/screenWakeLock.js',
   'js/tempHumiditySensor.js',
   'images/icons/icon-72x72.png',

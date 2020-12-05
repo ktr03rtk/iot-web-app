@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  class GeolocationLogger {
+  class GeolocationSensor {
     constructor() {
       this.geolocationLog = [];
       this.sendGpsLogInterval = null;
@@ -45,5 +45,5 @@
     }
   }
 
-  window.geolocationSensor = new GeolocationLogger();
+  window.geolocationSensor = new GeolocationSensor();
 })();
