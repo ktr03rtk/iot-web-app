@@ -1,6 +1,6 @@
 {
-  "name": "GPS logging PWA",
-  "short_name": "GPS logging PWA",
+  "name": "IoT Web App",
+  "short_name": "IoT Web App",
   "theme_color": "#7f5af0",
   "background_color": "#16161a",
   "display": "standalone",
