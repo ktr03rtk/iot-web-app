@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPS logging PWA</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" href="/images/icons/icon-384x384.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="images/icons/icon-128x128.png"
+      sizes="128x128"
+    />
+  </head>
+
+  <body>
+    <header>
+      <h1>GPS logging PWA</h1>
+    </header>
+    <main>
+      <p id="status">GPS情報収集停止中</p>
+      <button id="start-btn">start</button>
+      <button id="stop-btn" disabled>stop</button>
+
+      <div id="sensor-data">
+        <table>
+          <tr>
+            <th>緯度</th>
+            <th>経度</th>
+            <th>高度</th>
+          </tr>
+          <tr>
+            <td id="latitude">0°0'0.0"</td>
+            <td id="longitude">0°0'0.0"</td>
+            <td id="altitude">0.0m</td>
+          </tr>
+          <tr>
+            <th>温度</th>
+            <th>湿度</th>
+            <th>status</th>
+          </tr>
+          <tr>
+            <td id="temperature">0°C</td>
+            <td id="humidity">0％</td>
+            <td id="response-status">-</td>
+          </tr>
+        </table>
+      </div>
+    </main>
+
+    <script
+      async
+      src="https://unpkg.com/pwacompat"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("service-worker.js")
+            .then((reg) => {
+              console.log("Service worker registered!", reg);
+            })
+            .catch((err) => {
+              console.log("Service worker registration failed: ", err);
+            });
+        });
+      }
+    </script>
+    <script src="js/geolocationLogger.js"></script>
+    <script src="js/tempHumiditySensor.js"></script>
+    <script src="js/dataUploader.js"></script>
+    <script src="js/screenWakeLock.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

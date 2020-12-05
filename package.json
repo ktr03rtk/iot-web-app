@@ -1,0 +1,25 @@
+{
+  "name": "iot-web-app",
+  "version": "1.0.0",
+  "description": "GPS logging web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://git@github.com:ktr03rtk/iot-web-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ktr03rtk/iot-web-app/issues"
+  },
+  "homepage": "https://github.com/ktr03rtk/iot-web-app#readme",
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2"
+  }
+}
