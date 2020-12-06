@@ -36,7 +36,7 @@ function startLogger() {
     window.screenWakeLock.lock();
     startBtn.setAttribute('disabled', true);
     stopBtn.removeAttribute('disabled');
-    status.innerText = 'GPS・温湿度情報収集中';
+    status.innerText = 'Uploading data...';
   });
 
   stopBtn.addEventListener('click', () => {
@@ -46,7 +46,7 @@ function startLogger() {
     window.screenWakeLock.unlock();
     startBtn.removeAttribute('disabled');
     stopBtn.setAttribute('disabled', true);
-    status.innerText = 'GPS・温湿度情報収集停止中';
+    status.innerText = 'Waiting...';
   });
 }
 
