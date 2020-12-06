@@ -94,7 +94,7 @@
     }
 
     _sendSensorData() {
-      // 送信完了したログだけ確実に削除するため、送信ログ数を管理
+      // Delete data only if uploaded surely.
       const arrayLength = this.sensorData.length;
       const data = {
         sensorData: this.sensorData.slice(0, arrayLength),
