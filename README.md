@@ -4,7 +4,7 @@
 
 # Overview
 
-This is a web application that uses an Android OS phone and [Tukeru TH temperature and humidity sensor] (https://linkingiot.com/devices.html#tukeruTH) to upload location information (latitude, longitude, and altitude) and temperature and humidity information. Composed as PWA ( Progressive Web Apps), you can place app icons on the home screen just like native apps.
+This is a web application that uses an Android OS phone and [Tukeru TH temperature and humidity sensor](https://linkingiot.com/devices.html#tukeruTH) to upload location information (latitude, longitude, and altitude) and temperature and humidity information. Composed as PWA ( Progressive Web Apps), you can place app icons on the home screen just like native apps.
 
 # Demo
 
@@ -59,7 +59,7 @@ this.apiUrl = <place the target URL>
 
 - Once your app is registered as pwa on the phone, you can continue to use it even after you stop hosting. (The API URL you are uploading to must be enabled.)
 
-- Once loaded and cached, the app will not be able to load the updated content unless the user clears the cache. You can update content automatically by versioning the cache. For more information, see this cache strategy [article] (https://web.dev/offline-cookbook/).
+- Once loaded and cached, the app will not be able to load the updated content unless the user clears the cache. You can update content automatically by versioning the cache. For more information, see this cache strategy [article](https://web.dev/offline-cookbook/).
 
 # Supported OS
 
